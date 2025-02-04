@@ -21,3 +21,7 @@ logs/
 *.env
 *.local
 application-*.yml
+
+# generated
+**/generated/
+**/generated/**
