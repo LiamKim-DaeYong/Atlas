@@ -1,4 +1,4 @@
-package com.atlas.shop.domain
+package com.atlas.shop.domain.product
 
 import com.atlas.shop.common.annotation.DomainEntity
 import com.atlas.shop.domain.vo.Money
@@ -24,8 +24,17 @@ class Product(
         return Product(id, name, price, stock.increase(quantity))
     }
 
+    fun update(name: String? = null, price: Money? = null, stock: Int? = null): Product {
+        return Product(
+            id = this.id,
+            name = name?.let { Name(it) } ?: this.name,
+            price = price ?: this.price,
+            stock = stock?.let { Stock(it) } ?: this.stock
+        )
+    }
+
     @JvmInline
-    value class Name(private val value: String) {
+    value class Name(val value: String) {
         init {
             require(value.isNotBlank()) { "Product name cannot be blank" }
             require(value.length in 2..100) { "Product name must be between 2 and 100 characters" }
@@ -35,7 +44,7 @@ class Product(
     }
 
     @JvmInline
-    value class Stock(private val value: Int) {
+    value class Stock(val value: Int) {
         init {
             require(value >= 0) { "Stock quantity cannot be negative" }
         }

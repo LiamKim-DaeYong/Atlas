@@ -1,7 +1,7 @@
 package com.atlas.shop.adapter.out.persistence.product
 
 import com.atlas.shop.application.port.out.product.ProductQueryPort
-import com.atlas.shop.domain.Product
+import com.atlas.shop.domain.product.Product
 import com.atlas.shop.domain.vo.Money
 import jooq.dsl.tables.Products
 import jooq.dsl.tables.records.ProductsRecord
@@ -9,7 +9,7 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 
 @Repository
-class ProductQueryAdapter(private val dsl: DSLContext) : ProductQueryPort{
+class ProductJooqAdapter(private val dsl: DSLContext) : ProductQueryPort{
 
     override fun findById(id: Long): Product? {
         return dsl.selectFrom(Products.PRODUCTS)

@@ -1,6 +1,6 @@
 package com.atlas.shop.adapter.out.persistence.product
 
-import com.atlas.shop.domain.Product
+import com.atlas.shop.domain.product.Product
 import com.atlas.shop.domain.vo.Money
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -17,14 +17,21 @@ class ProductJpaEntity(
     val id: Long? = null,
 
     @Column(nullable = false, length = 100)
-    val name: String,
+    var name: String,
 
     @Column(nullable = false)
-    val price: BigDecimal,
+    var price: BigDecimal,
 
     @Column(nullable = false)
-    val stock: Int
+    var stock: Int
 ) {
+    fun updateFromDomain(product: Product): ProductJpaEntity {
+        this.name = product.name.value
+        this.price = product.price.asBigDecimal()
+        this.stock = product.stock.value
+        return this
+    }
+
     fun toDomain(): Product {
         return Product(
             id = id,
