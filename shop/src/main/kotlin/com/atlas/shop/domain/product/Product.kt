@@ -2,14 +2,27 @@ package com.atlas.shop.domain.product
 
 import com.atlas.shop.common.annotation.DomainEntity
 import com.atlas.shop.domain.vo.Money
+import com.atlas.shop.util.IdGenerator
+import com.atlas.shop.util.UUIDGenerator
 
 @DomainEntity
 class Product(
-    val id: Long? = null,
+    val id: String,
     val name: Name,
     val price: Money,
     val stock: Stock
 ) {
+    constructor(
+        name: Name,
+        price: Money,
+        stock: Stock
+    ) : this(
+        id = UUIDGenerator.generate(),
+        name = name,
+        price = price,
+        stock = stock
+    )
+
     fun isAvailable(): Boolean = stock.toInt() > 0
 
     fun changePrice(newPrice: Money): Product {

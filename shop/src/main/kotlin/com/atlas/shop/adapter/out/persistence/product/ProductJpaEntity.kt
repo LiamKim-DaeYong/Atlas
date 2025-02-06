@@ -13,8 +13,8 @@ import java.math.BigDecimal
 @Entity
 @Table(name = "products")
 class ProductJpaEntity(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    @Id
+    val id: String,
 
     @Column(nullable = false, length = 100)
     var name: String,

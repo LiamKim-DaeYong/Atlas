@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/shop_db
-    username: shop_user
-    password: shop_password
+    url: jdbc:postgresql://localhost:5432/atlas_db
+    username: atlas_user
+    password: atlas_password
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -14,6 +14,9 @@ spring:
     open-in-view: false
   jooq:
     sql-dialect: POSTGRES
+  liquibase:
+    change-log: classpath:/db/liquibase/db.changelog-master.yaml
+    enabled: true
 
 server:
   port: 8080

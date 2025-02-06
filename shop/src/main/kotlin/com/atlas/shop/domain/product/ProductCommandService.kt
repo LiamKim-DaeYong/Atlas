@@ -23,7 +23,7 @@ class ProductCommandService(
         return productCommandPort.save(product)
     }
 
-    override fun update(id: Long, name: String?, price: Money?, stock: Int?): Product {
+    override fun update(id: String, name: String?, price: Money?, stock: Int?): Product {
         val product = productCommandPort.findById(id)
             ?: throw EntityNotFoundException("Product with id $id not found")
 
@@ -32,5 +32,5 @@ class ProductCommandService(
         return productCommandPort.save(updatedProduct)
     }
 
-    override fun delete(id: Long): Boolean = productCommandPort.delete(id)
+    override fun delete(id: String): Boolean = productCommandPort.delete(id)
 }

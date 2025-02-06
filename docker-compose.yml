@@ -3,12 +3,12 @@ version: '3.8'
 services:
   postgres:
     image: postgres:15
-    container_name: shop-postgres
+    container_name: atlas-postgres
     restart: always
     environment:
-      POSTGRES_DB: shop_db
-      POSTGRES_USER: shop_user
-      POSTGRES_PASSWORD: shop_password
+      POSTGRES_DB: atlas_db
+      POSTGRES_USER: atlas_user
+      POSTGRES_PASSWORD: atlas_password
     ports:
       - "5432:5432"
     volumes:

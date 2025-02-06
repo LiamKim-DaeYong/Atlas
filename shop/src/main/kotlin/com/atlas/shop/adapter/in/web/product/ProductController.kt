@@ -30,7 +30,7 @@ class ProductController(
     }
 
     @GetMapping("/{id}")
-    fun getProductById(@PathVariable("id") id : Long): Product? {
+    fun getProductById(@PathVariable("id") id : String): Product? {
         return productQueryUseCase.findById(id)
     }
 
@@ -41,7 +41,7 @@ class ProductController(
 
     @PatchMapping("/{id}")
     fun updateProduct(
-        @PathVariable id: Long,
+        @PathVariable id: String,
         @RequestBody request: UpdateProductRequest
     ): Product {
         return productCommandUseCase.update(
@@ -53,7 +53,7 @@ class ProductController(
     }
 
     @DeleteMapping("/{id}")
-    fun deleteProduct(@PathVariable id: Long): Boolean {
+    fun deleteProduct(@PathVariable id: String): Boolean {
         return productCommandUseCase.delete(id)
     }
 }

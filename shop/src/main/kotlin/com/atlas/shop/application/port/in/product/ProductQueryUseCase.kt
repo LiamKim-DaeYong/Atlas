@@ -6,5 +6,5 @@ import com.atlas.shop.domain.product.Product
 @UseCase
 interface ProductQueryUseCase {
     fun findAll(): List<Product>
-    fun findById(id: Long): Product?
+    fun findById(id: String): Product?
 }

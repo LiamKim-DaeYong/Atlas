@@ -7,6 +7,6 @@ import com.atlas.shop.domain.vo.Money
 @UseCase
 interface ProductCommandUseCase {
     fun create(name: String, price: Money, stock: Int): Product
-    fun update(id: Long, name: String?, price: Money?, stock: Int?): Product
-    fun delete(id: Long): Boolean
+    fun update(id: String, name: String?, price: Money?, stock: Int?): Product
+    fun delete(id: String): Boolean
 }

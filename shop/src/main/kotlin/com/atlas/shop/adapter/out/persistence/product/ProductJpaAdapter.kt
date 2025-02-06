@@ -9,7 +9,7 @@ class ProductJpaAdapter(
     private val jpaRepository: ProductJpaRepository
 ) : ProductCommandPort {
 
-    override fun findById(id: Long): Product? {
+    override fun findById(id: String): Product? {
         return jpaRepository.findById(id).map { it.toDomain() }.orElse(null)
     }
 
@@ -20,7 +20,7 @@ class ProductJpaAdapter(
         return savedEntity.toDomain()
     }
 
-    override fun delete(id: Long): Boolean {
+    override fun delete(id: String): Boolean {
         return if (jpaRepository.existsById(id)) {
             jpaRepository.deleteById(id)
             true

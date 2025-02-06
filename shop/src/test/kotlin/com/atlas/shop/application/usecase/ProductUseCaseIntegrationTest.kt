@@ -36,7 +36,7 @@ class ProductUseCaseIntegrationTest : DescribeSpec() {
                 it("해당 제품이 저장되어야 한다") {
                     val product = productCommandUseCase.create("Test Product", Money(BigDecimal("100.00")), 10)
 
-                    productQueryUseCase.findById(product.id!!)!!.let {
+                    productQueryUseCase.findById(product.id)!!.let {
                         it.name.toString() shouldBe "Test Product"
                         it.price.toString() shouldBe "100.00"
                         it.stock.toInt() shouldBe 10
@@ -48,9 +48,9 @@ class ProductUseCaseIntegrationTest : DescribeSpec() {
                 it("해당 제품이 더 이상 조회되지 않아야 한다") {
                     val product = productCommandUseCase.create("Product To Delete", Money(BigDecimal("200.00")), 2)
 
-                    productCommandUseCase.delete(product.id!!)
+                    productCommandUseCase.delete(product.id)
 
-                    val deletedProduct = productQueryUseCase.findById(product.id!!)
+                    val deletedProduct = productQueryUseCase.findById(product.id)
                     deletedProduct shouldBe null
                 }
             }
@@ -69,7 +69,7 @@ class ProductUseCaseIntegrationTest : DescribeSpec() {
                     val newProduct = productCommandUseCase.create("Single Product", Money(BigDecimal("150.00")), 7)
 
                     // when
-                    val foundProduct = productQueryUseCase.findById(newProduct.id!!)
+                    val foundProduct = productQueryUseCase.findById(newProduct.id)
 
                     // then
                     foundProduct shouldNotBe null
@@ -86,7 +86,7 @@ class ProductUseCaseIntegrationTest : DescribeSpec() {
 
                     // when
                     val updatedProduct = productCommandUseCase.update(
-                        id = product.id!!,
+                        id = product.id,
                         name = "Updated Name",
                         price = Money(BigDecimal("60.00")),
                         stock = 5
@@ -97,7 +97,7 @@ class ProductUseCaseIntegrationTest : DescribeSpec() {
                     updatedProduct.price.toString() shouldBe "60.00"
                     updatedProduct.stock.toInt() shouldBe 5
 
-                    val foundProduct = productQueryUseCase.findById(product.id!!)
+                    val foundProduct = productQueryUseCase.findById(product.id)
                     foundProduct shouldNotBe null
                     foundProduct?.name.toString() shouldBe "Updated Name"
                     foundProduct?.price.toString() shouldBe "60.00"
@@ -110,7 +110,7 @@ class ProductUseCaseIntegrationTest : DescribeSpec() {
 
                     // when - 이름만 변경
                     val updatedProduct = productCommandUseCase.update(
-                        id = product.id!!,
+                        id = product.id,
                         name = "New Name",
                         price = null, // 가격 변경 없음
                         stock = null  // 재고 변경 없음
@@ -121,7 +121,7 @@ class ProductUseCaseIntegrationTest : DescribeSpec() {
                     updatedProduct.price.toString() shouldBe "80.00" // 기존 가격 유지
                     updatedProduct.stock.toInt() shouldBe 10 // 기존 재고 유지
 
-                    val foundProduct = productQueryUseCase.findById(product.id!!)
+                    val foundProduct = productQueryUseCase.findById(product.id)
                     foundProduct shouldNotBe null
                     foundProduct?.name.toString() shouldBe "New Name"
                     foundProduct?.price.toString() shouldBe "80.00"

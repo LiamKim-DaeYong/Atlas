@@ -13,5 +13,5 @@ class ProductQueryService(
 
     override fun findAll(): List<Product> = productQueryPort.findAll()
 
-    override fun findById(id: Long): Product? = productQueryPort.findById(id)
+    override fun findById(id: String): Product? = productQueryPort.findById(id)
 }
