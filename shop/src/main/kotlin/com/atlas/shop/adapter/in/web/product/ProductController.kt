@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @WebAdapter
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("/api/v1/products")
 class ProductController(
     private val productCommandUseCase: ProductCommandUseCase,
     private val productQueryUseCase: ProductQueryUseCase,

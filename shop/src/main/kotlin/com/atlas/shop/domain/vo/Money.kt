@@ -11,7 +11,8 @@ value class Money(private val amount: BigDecimal) {
 
     operator fun plus(other: Money): Money = Money(amount.add(other.amount))
     operator fun minus(other: Money): Money = Money(amount.subtract(other.amount))
-    operator fun times(multiplier: BigDecimal): Money = Money(amount.multiply(multiplier))
+    operator fun times(multiplier: BigDecimal): Money =
+        Money(amount.multiply(multiplier).setScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE))
 
     fun isGreaterThan(other: Money): Boolean = amount > other.amount
     fun isZero(): Boolean = amount == BigDecimal.ZERO

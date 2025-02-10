@@ -1,5 +1,5 @@
 @host = http://localhost:8080
-@product_endpoint = /api/v1/product
+@product_endpoint = /api/v1/products
 
 ### 1. 상품 생성 (UUID 저장 및 검증)
 POST {{host}}{{product_endpoint}}

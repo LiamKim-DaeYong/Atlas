@@ -24,12 +24,19 @@ class ProductJooqAdapter(private val dsl: DSLContext) : ProductQueryPort{
             .map { record -> mapToProduct(record) }
     }
 
+    override fun findByIds(ids: List<String>): List<Product> {
+        return dsl.selectFrom(Products.PRODUCTS)
+            .where(Products.PRODUCTS.ID.`in`(ids))
+            .fetch()
+            .map { record -> mapToProduct(record) }
+    }
+
     private fun mapToProduct(record: ProductsRecord): Product {
         return Product(
-            id = record[Products.PRODUCTS.ID]!!,
-            name = Product.Name(record[Products.PRODUCTS.NAME]!!),
-            price = Money(record[Products.PRODUCTS.PRICE]!!),
-            stock = Product.Stock(record[Products.PRODUCTS.STOCK]!!),
+            id = record.id,
+            name = Product.Name(record.name),
+            price = Money(record.price),
+            stock = Product.Stock(record.stock),
         )
     }
 }

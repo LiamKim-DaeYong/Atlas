@@ -1,0 +1,62 @@
+@host = http://localhost:8080
+@order_endpoint = /api/v1/orders
+@product_endpoint = /api/v1/products
+
+### 1. 상품 생성 (UUID 저장)
+POST {{host}}{{product_endpoint}}
+Content-Type: application/json
+
+{
+  "name": "강력한 검",
+  "price": 10000,
+  "stock": 50
+}
+
+> {%
+    client.test("상품 생성 응답 검증", () => {
+        const responseJson = response.body;
+        client.global.set("product_uuid", responseJson.id); // UUID 저장
+
+        client.assert(response.status === 200, "상품 생성 응답 상태가 200이어야 합니다");
+        client.assert(responseJson.name === "강력한 검", "상품명이 일치해야 합니다");
+    });
+%}
+
+### 2. 주문 생성 (생성한 상품으로 주문)
+POST {{host}}{{order_endpoint}}
+Content-Type: application/json
+
+{
+  "userId": "user-123",
+  "items": [
+    {
+      "productId": "{{product_uuid}}",
+      "quantity": 2,
+      "price": 10000
+    }
+  ]
+}
+
+> {%
+    client.test("주문 생성 응답 검증", () => {
+        const responseJson = response.body;
+        client.global.set("order_uuid", responseJson.id); // 주문 UUID 저장
+
+        client.assert(response.status === 200, "주문 생성 응답 상태가 200이어야 합니다");
+        client.assert(responseJson.userId === "user-123", "사용자 ID가 일치해야 합니다");
+        client.assert(responseJson.status === "PENDING_PAYMENT", "초기 주문 상태가 PENDING_PAYMENT여야 합니다");
+    });
+%}
+
+### 3. 주문 조회 (생성된 주문 확인)
+GET {{host}}{{order_endpoint}}/{{order_uuid}}
+
+> {%
+    client.test("주문 조회 응답 검증", () => {
+        const responseJson = response.body;
+
+        client.assert(response.status === 200, "주문 조회 응답 상태가 200이어야 합니다");
+        client.assert(responseJson.id === client.global.get("order_uuid"), "주문 UUID가 일치해야 합니다");
+        client.assert(responseJson.status === "PENDING_PAYMENT", "주문 상태가 일치해야 합니다");
+    });
+%}
